@@ -1,16 +1,27 @@
-# bot.py
 import os
-
-import discord
+import nextcord
+from nextcord.ext import commands
 from dotenv import load_dotenv
 
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
+TESTING_GUILD_ID = os.getenv("G_ID")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
-client = discord.Client()
 
-@client.event
+intents = nextcord.Intents.all()
+intents.members = True
+intents.message_content = True
+
+
+bot = commands.Bot(command_prefix='./', intents=intents)
+
+@bot.event
 async def on_ready():
-    print(f'{client.user} has connected to Discord!')
+    print(f"logged in as {bot.user}")
 
-client.run(TOKEN)
+# cogs
+for filename in os.listdir("./cogs"):
+    if filename.endswith(".py"):
+        bot.load_extension(f"cogs.{filename[:-3]}")
+
+bot.run(BOT_TOKEN)
