@@ -1,6 +1,6 @@
 # notabot
 
-#### ruin requirements.txt inside a venv
+#### run requirements.txt inside a venv
 
 ## Roadmap
 
